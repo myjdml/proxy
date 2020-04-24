@@ -44,25 +44,40 @@ Array.prototype.iReduce = function iReduce(fn, initial) {
     return initial ? reduceFun(fn, initial, firstIndex, arr) : reduceFun(fn, head, firstIndex, tail)
 }
 
-//递归第二版
-debugger;
-Array.prototype.myReduce = function(fn,initial){
-    for(let i = 0 ; i < this.length; i++){ 
-        if(!initial){ 
-            initial = fn(this[i],this[i+1],i+1,this);
-            i++; 
-        }else{ 
-            initial = fn(initial,this[i],i,this);
-        }
-    }
-    return initial;
-}
-
 //实例
 
-let sum = arr.myReduce((prev, cur, index, arr) => {
+let sum = arr.iReduce((prev, cur, index, arr) => {
     console.log(prev, cur, index, arr);
     return prev * cur;
-});
+}, 100);
 
 console.log(sum);
+
+
+
+
+
+
+
+const reduceHelper = (fn, acc, idx, array) => {
+    if (array.length === 0) return acc
+    const [head, ...tail] = array
+    idx++
+    return reduceHelper(fn, fn(acc, head, idx, array), idx, tail)
+  }
+  
+  Array.prototype.myReduce = function (cb, initialValue) {
+    const array = this
+    const [head, ...tail] = array
+    const startIndex = initialValue ? -1 : 0
+  
+    return initialValue ? reduceHelper(cb, initialValue, startIndex, array) : reduceHelper(cb, head, startIndex, tail)
+  }
+  
+
+  let sum = arr.fakeReduce((prev, cur, index, arr) => {
+    console.log(prev, cur, index, arr);
+    return prev * cur;
+  }, 100);
+  
+  console.log(sum);

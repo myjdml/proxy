@@ -45,7 +45,6 @@ Array.prototype.iReduce = function iReduce(fn, initial) {
 }
 
 //递归第二版
-debugger;
 Array.prototype.myReduce = function(fn,initial){
     for(let i = 0 ; i < this.length; i++){ 
         if(!initial){ 
@@ -63,6 +62,6 @@ Array.prototype.myReduce = function(fn,initial){
 let sum = arr.myReduce((prev, cur, index, arr) => {
     console.log(prev, cur, index, arr);
     return prev * cur;
-});
+}, 100);
 
 console.log(sum);

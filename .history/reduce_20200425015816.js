@@ -63,6 +63,6 @@ Array.prototype.myReduce = function(fn,initial){
 let sum = arr.myReduce((prev, cur, index, arr) => {
     console.log(prev, cur, index, arr);
     return prev * cur;
-});
+}, 100);
 
 console.log(sum);

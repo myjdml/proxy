@@ -45,17 +45,17 @@ Array.prototype.iReduce = function iReduce(fn, initial) {
 }
 
 //递归第二版
-debugger;
-Array.prototype.myReduce = function(fn,initial){
-    for(let i = 0 ; i < this.length; i++){ 
-        if(!initial){ 
-            initial = fn(this[i],this[i+1],i+1,this);
-            i++; 
-        }else{ 
-            initial = fn(initial,this[i],i,this);
+Array.prototype.myReduce = function(callback,prev){
+    for(let i = 0 ; i < this.length; i++){
+    // 判断有没有第二个参数 
+        if(!prev){ // 没有prev复杂点，第一次拿的是两个元素arr[0],arr[1]，注意index的变化 
+            prev = callback(this[i],this[i+1],i+1,this); //这里的指针是i+1都是对的，但是下一次循环的时候i必须按是3所以需要+1
+            i++; // 第一次循环了两个变量，下次应该从第三个执行，所以向后移动
+        }else{ //有prev简单，直接就是从arr[0]开始递归
+            prev = callback(prev,this[i],i,this);
         }
     }
-    return initial;
+    return prev;
 }
 
 //实例
@@ -63,6 +63,6 @@ Array.prototype.myReduce = function(fn,initial){
 let sum = arr.myReduce((prev, cur, index, arr) => {
     console.log(prev, cur, index, arr);
     return prev * cur;
-});
+}, 100);
 
 console.log(sum);

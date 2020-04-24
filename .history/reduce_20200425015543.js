@@ -45,14 +45,13 @@ Array.prototype.iReduce = function iReduce(fn, initial) {
 }
 
 //递归第二版
-debugger;
 Array.prototype.myReduce = function(fn,initial){
     for(let i = 0 ; i < this.length; i++){ 
         if(!initial){ 
-            initial = fn(this[i],this[i+1],i+1,this);
+            initial = callback(this[i],this[i+1],i+1,this);
             i++; 
         }else{ 
-            initial = fn(initial,this[i],i,this);
+            initial = callback(prev,this[i],i,this);
         }
     }
     return initial;
@@ -63,6 +62,6 @@ Array.prototype.myReduce = function(fn,initial){
 let sum = arr.myReduce((prev, cur, index, arr) => {
     console.log(prev, cur, index, arr);
     return prev * cur;
-});
+}, 100);
 
 console.log(sum);
